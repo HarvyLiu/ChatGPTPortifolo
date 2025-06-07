@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Portfolio</title>
+  <style>
+    :root {
+      --primary: #4e9af1;
+      --dark: #1e1e2f;
+      --light: #f5f5f5;
+      --accent: #ff6f61;
+      --transition: 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--light);
+      color: var(--dark);
+      scroll-behavior: smooth;
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--dark);
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      color: #ccc;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background: var(--primary);
+      padding: 1rem;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: var(--transition);
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    section {
+      padding: 3rem 1rem;
+      max-width: 1100px;
+      margin: auto;
+      animation: fadeInUp 0.8s ease;
+    }
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .skill {
+      padding: 1rem 2rem;
+      background: var(--primary);
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    .skill:hover {
+      background: var(--accent);
+      transform: scale(1.05);
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      transition: transform 0.3s;
+    }
+
+    .project:hover {
+      transform: translateY(-5px);
+    }
+
+    .project img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .project-info {
+      padding: 1rem;
+    }
+
+    .filters {
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .filters button {
+      padding: 0.5rem 1rem;
+      margin: 0 0.3rem;
+      border: none;
+      border-radius: 4px;
+      background: var(--primary);
+      color: white;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .filters button:hover {
+      background: var(--accent);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: var(--dark);
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Your Name</h1>
+    <p>Web Developer & Designer</p>
+  </header>
+
+  <nav>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+  </nav>
+
+  <section id="skills">
+    <h2>My Skills</h2>
+    <div class="skills">
+      <div class="skill">HTML</div>
+      <div class="skill">CSS</div>
+      <div class="skill">JavaScript</div>
+      <div class="skill">UI/UX</div>
+      <div class="skill">Git</div>
+      <div class="skill">Responsive Design</div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>Project Gallery</h2>
+    <div class="filters">
+      <button onclick="filterProjects('all')">All</button>
+      <button onclick="filterProjects('web')">Web</button>
+      <button onclick="filterProjects('design')">Design</button>
+    </div>
+    <div class="projects" id="project-list">
+      <!-- Projects dynamically inserted -->
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 Your Name. All rights reserved.
+  </footer>
+
+  <script>
+    const projects = [
+      {
+        title: "Portfolio Website",
+        type: "web",
+        image: "https://via.placeholder.com/400x200?text=Portfolio+Web",
+        description: "Responsive personal portfolio website"
+      },
+      {
+        title: "UI Design Mockup",
+        type: "design",
+        image: "https://via.placeholder.com/400x200?text=UI+Mockup",
+        description: "Figma UI/UX design concept"
+      },
+      {
+        title: "JS Game",
+        type: "web",
+        image: "https://via.placeholder.com/400x200?text=JS+Game",
+        description: "Browser game using JavaScript"
+      },
+      {
+        title: "Landing Page",
+        type: "design",
+        image: "https://via.placeholder.com/400x200?text=Landing+Page",
+        description: "Marketing page design"
+      }
+    ];
+
+    const projectContainer = document.getElementById('project-list');
+
+    function displayProjects(filter) {
+      projectContainer.innerHTML = '';
+      const filtered = filter === 'all' ? projects : projects.filter(p => p.type === filter);
+      filtered.forEach(project => {
+        const proj = document.createElement('div');
+        proj.className = 'project';
+        proj.innerHTML = `
+          <img src="${project.image}" alt="${project.title}" />
+          <div class="project-info">
+            <h3>${project.title}</h3>
+            <p>${project.description}</p>
+          </div>
+        `;
+        projectContainer.appendChild(proj);
+      });
+    }
+
+    function filterProjects(type) {
+      displayProjects(type);
+    }
+
+    // Initial load
+    window.onload = () => displayProjects('all');
+  </script>
+
+</body>
+</html>
